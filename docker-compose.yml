@@ -1,9 +1,9 @@
 version: '3.2'
 
 services:
-  gojo_elasticsearch:
-    container_name: gojo_elasticsearch
-    image: gojo_elasticsearch:latest
+  local_elasticsearch:
+    container_name: local_elasticsearch
+    image: local_elasticsearch:latest
     build:
       context: elasticsearch/
       args:
@@ -14,7 +14,7 @@ services:
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
       - type: volume
-        source: gojo_elasticsearch
+        source: local_elasticsearch
         target: /usr/share/elasticsearch/data
     ports:
       - "9200:9200"
@@ -28,9 +28,9 @@ services:
     networks:
       - elk
 
-  gojo_logstash:
-    container_name: gojo_logstash
-    image: gojo_logstash:latest
+  local_logstash:
+    container_name: local_logstash
+    image: local_logstash:latest
     build:
       context: logstash/
       args:
@@ -54,11 +54,11 @@ services:
     networks:
       - elk
     depends_on:
-      - gojo_elasticsearch
+      - local_elasticsearch
 
-  gojo_kibana:
-    image: gojo_kibana:latest
-    container_name: gojo_kibana
+  local_kibana:
+    image: local_kibana:latest
+    container_name: local_kibana
     build:
       context: kibana/
       args:
@@ -73,11 +73,11 @@ services:
     networks:
       - elk
     depends_on:
-      - gojo_elasticsearch
+      - local_elasticsearch
 
 networks:
   elk:
     driver: bridge
 
 volumes:
-  gojo_elasticsearch:
+  local_elasticsearch:
