@@ -122,7 +122,7 @@ Docker container: [Running Enterprise Search Using Docker][enterprisesearch-dock
 
 [Enterprise Search documentation][enterprisesearch-docs]
 
-[config-enterprisesearch]: ./config/enterprise-search.yml
+[config-enterprisesearch]: config/enterprise-search.yml
 
 [enterprisesearch-encryption]: https://www.elastic.co/guide/en/enterprise-search/current/encryption-keys.html
 [enterprisesearch-security]: https://www.elastic.co/guide/en/workplace-search/current/workplace-search-security.html

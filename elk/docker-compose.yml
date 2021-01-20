@@ -32,7 +32,7 @@ services:
     container_name: local_logstash
     image: local_logstash:latest
     build:
-      context: logstash/
+      context: logstash
       args:
         ELK_VERSION: $ELK_VERSION
     volumes:
@@ -60,7 +60,7 @@ services:
     image: local_kibana:latest
     container_name: local_kibana
     build:
-      context: kibana/
+      context: kibana
       args:
         ELK_VERSION: $ELK_VERSION
     volumes:
