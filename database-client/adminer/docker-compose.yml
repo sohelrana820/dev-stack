@@ -1,6 +1,7 @@
 version: '3.3'
 services:
-  adminer:
+  local_adminer:
+    container_name: local_adminer
     image: adminer:4.7.8
     environment:
         - 'ADMINER_DEFAULT_SERVER=${DEFAULT_DATABASE_HOST}:${DEFAULT_DATABASE_PORT}'
