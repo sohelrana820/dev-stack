@@ -1,13 +1,13 @@
 version: '3.3'
 services:
-  mysql_3356:
+  local_mysql_3356:
     image: mysql:5.6
-    container_name: mysql_3356
+    container_name: local_mysql_3356
     ports:
       - "${MYSQL_PORT}:3306"
     env_file: ./.env
     volumes:
-      - /var/www/html/storage/database/mysql_3356:/var/lib/mysql
+      - ${VOLUME_PATH}:/var/lib/mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password
     environment:
