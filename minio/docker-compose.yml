@@ -1,4 +1,5 @@
 version: '3.3'
+
 services:
   local_minio:
     container_name: local_minio
@@ -13,3 +14,16 @@ services:
       - ${VOLUME_PATH}:/data
     ports:
       - ${MINIO_PUBLISH_PORT}:9000
+
+  minio_client:
+    image: minio/mc:RELEASE.2021-07-27T06-46-19Z
+    command: [ "--version" ]
+    restart: "no"
+    env_file:
+      - .env
+    depends_on:
+      - local_minio
+    # networks:
+    #   - common-net
+    volumes:
+      - ${DOCKER_VOLUME_ROOT_DIR}:/root/.mc
