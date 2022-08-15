@@ -1,0 +1,31 @@
+networks:
+  common-net:
+    external: true
+
+volumes:
+  common-redis:
+    name: 'common-redis'
+
+services:
+
+  redis:
+    image: bitnami/redis:latest
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+    networks:
+      common-net:
+        aliases:
+          - common-redis
+    volumes:
+      - common-redis:/bitnami
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    env_file:
+      - .env
+    ports:
+      - 8081:8081
+    networks:
+      - common-net
