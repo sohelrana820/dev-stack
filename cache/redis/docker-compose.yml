@@ -1,6 +1,8 @@
 networks:
   common-net:
     external: true
+  pol-common-network:
+    external: true
 
 volumes:
   common-redis:
@@ -29,3 +31,4 @@ services:
       - 8081:8081
     networks:
       - common-net
+      - pol-common-network

@@ -1,4 +1,11 @@
 version: '3.3'
+
+networks:
+  app_common_network:
+    external: true
+  pol-common-network:
+    external: true
+
 services:
   local_adminer:
     container_name: local_adminer
@@ -9,6 +16,7 @@ services:
     ports:
       - "${ADMINER_PUBLISH_PORT}:8080"
     networks:
-      - default
+      - app_common_network
+      - pol-common-network
     volumes:
       - ${VOLUME_PATH}:/sessions

@@ -1,4 +1,11 @@
 version: '3.3'
+
+networks:
+  app_common_network:
+    external: true
+  pol-common-network:
+    external: true
+
 services:
   local_mysql_3308:
     image: mysql:8
@@ -15,3 +22,6 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_DATABASE}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - app_common_network
+      - pol-common-network
