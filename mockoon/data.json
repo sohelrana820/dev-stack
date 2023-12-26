@@ -1,0 +1,205 @@
+{
+  "uuid": "77cca9c4-d7b0-4afa-8206-baa02b4d5c6d",
+  "lastMigration": 28,
+  "name": "POL Mock Responses",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 2000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "f2c6b950-a073-4a8c-8de9-cf76d665fe0f",
+      "type": "http",
+      "documentation": "",
+      "method": "patch",
+      "endpoint": "channel/send/ipn/recharge/:transactionId",
+      "responses": [
+        {
+          "uuid": "bea5ef1b-10b0-4742-94b6-35c225453fe8",
+          "body": "{\n  \"success\": true,\n  \"message\": \"IPN has been received successfully\",\n  \"data\": {\n    \"transaction_id\": \"{{urlParam 'transactionId'}}\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "e230db7f-3f5a-4813-ba96-f71cf8ab7a22",
+      "type": "http",
+      "documentation": "",
+      "method": "patch",
+      "endpoint": "channel/send/ipn/recharge/:transactionId/:errorCode",
+      "responses": [
+        {
+          "uuid": "e5ed2449-52c7-4948-9044-2e60e629bc54",
+          "body": "{\n  \"success\": false,\n  \"message\": \"Sorry, bad request!\",\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "x167",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "errorCode",
+              "value": "400",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id"
+        },
+        {
+          "uuid": "7b0daef7-8aae-411b-bba3-5556d53545f1",
+          "body": "{\n  \"success\": false,\n  \"message\": \"Sorry, something went wrong!\",\n}",
+          "latency": 0,
+          "statusCode": 500,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id"
+        },
+        {
+          "uuid": "4764a58c-5f8a-428b-9049-57423f8af77f",
+          "body": "{\n  \"success\": false,\n  \"message\": \"Sorry, unauthorized!\",\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "errorCode",
+              "value": "401",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id"
+        },
+        {
+          "uuid": "a5a1e30a-0d76-4742-a309-ddb0a748020c",
+          "body": "{\n  \"success\": false,\n  \"message\": \"Sorry, forbidden!\",\n}",
+          "latency": 0,
+          "statusCode": 403,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "errorCode",
+              "value": "403",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id"
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "f2c6b950-a073-4a8c-8de9-cf76d665fe0f"
+    },
+    {
+      "type": "route",
+      "uuid": "e230db7f-3f5a-4813-ba96-f71cf8ab7a22"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "740756a9-d3c1-4a8d-9b66-cebd6c382d98",
+      "id": "ndfl",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'datatype.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    },
+    {
+      "uuid": "107ac788-2983-44b3-b269-8cba35ff71df",
+      "id": "x167",
+      "name": "Channel IPN Data",
+      "documentation": "",
+      "value": "{\n    \"id\": \"zPUs2kdVIkzN6zN0u\",\n    \"status\": true,\n    \"href\": \"\",\n    \"name\": \"Recharge details.\",\n    \"transactionStatus\": \"success\",\n    \"rechargeStatus\": \"successful\",\n    \"totalRechargeAmount\": 28,\n    \"totalPaidAmount\": 28,\n    \"totalCampaignDiscount\": \"0\",\n    \"totalSuccessfulRechargeAmount\": 28,\n    \"totalFailedRechargeAmount\": 0,\n    \"totalRefundAmount\": 0,\n    \"remarks\": \"\",\n    \"remarks_bn\": \"\",\n    \"service_provider_contact_msg_en\": \"\",\n    \"service_provider_contact_msg_bn\": \"\",\n    \"data\": [\n        {\n            \"offerDetails\": null,\n            \"paymentDate\": \"2023-11-14T11:11:37.000000Z\",\n            \"amount\": {\n                \"amount\": 28,\n                \"units\": \"BDT\"\n            },\n            \"type\": \"basic\",\n            \"details\": {\n                \"accountNumber\": \"01711092163\",\n                \"accountNumberType\": \"RetailerMSISDN\"\n            },\n            \"relatedPayment\": {\n                \"id\": \"01301899988\",\n                \"name\": \"CustomerMSISDN\",\n                \"description\": null,\n                \"transactionStatusType\": \"success\"\n            }\n        }\n    ],\n    \"direct_payment_binding_info\": [],\n    \"channelId\": 50,\n    \"invoiceId\": \"231114QJhrHGzm7GXaJf\",\n    \"sofStatus\": \"success\"\n}"
+    }
+  ]
+}
