@@ -1,9 +1,13 @@
 version: '3.3'
 
 networks:
+  default:
+    driver: bridge
   app_common_network:
     external: true
   pol-common-network:
+    external: true
+  sol-order-orchester-app:
     external: true
 
 services:
@@ -18,5 +22,6 @@ services:
     networks:
       - app_common_network
       - pol-common-network
+      - sol-order-orchester-app
     volumes:
       - ${VOLUME_PATH}:/sessions

@@ -3,6 +3,8 @@ networks:
     external: true
   pol-common-network:
     external: true
+  sol-order-orchester-app:
+    external: true
 
 volumes:
   common-redis:
@@ -17,9 +19,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      common-net:
-        aliases:
-          - common-redis
+      - sol-order-orchester-app
     volumes:
       - common-redis:/bitnami
 
@@ -32,3 +32,4 @@ services:
     networks:
       - common-net
       - pol-common-network
+      - sol-order-orchester-app

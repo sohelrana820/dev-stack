@@ -1,4 +1,15 @@
 version: "3.6"
+
+networks:
+  default:
+    driver: bridge
+  app_common_network:
+    external: true
+  pol-common-network:
+    external: true
+  sol-order-orchester-app:
+    external: true
+
 # https://docs.docker.com/compose/compose-file/
 services:
   rabbitmq:
@@ -17,8 +28,7 @@ services:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
     networks:
-      - network
-networks:
-  # Declare our private network.  We must declare one for the magic
-  # Docker DNS to work, but otherwise its default settings are fine.
-  network: {}
+      - app_common_network
+      - pol-common-network
+      - sol-order-orchester-app
+
