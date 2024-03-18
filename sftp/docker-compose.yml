@@ -1,0 +1,18 @@
+# Use root/example as user/password credentials
+version: '3.7'
+
+networks:
+  sol-order-orchester-app:
+    external: true
+
+services:
+  sftp:
+    image: atmoz/sftp
+    volumes:
+      - /home/bs678/Documents/personal/docker-data:/home/foo/upload
+    ports:
+      - "9102:22"
+    # command: foo:pass:1001
+    command: foo:pass:::upload
+    networks:
+      - sol-order-orchester-app
