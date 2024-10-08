@@ -17,7 +17,7 @@ services:
     env_file:
       - .env
     ports:
-      - "6379:6379"
+      - "6378:6379"
     networks:
       - sol-order-orchester-app
     volumes:

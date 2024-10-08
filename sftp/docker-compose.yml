@@ -9,7 +9,7 @@ services:
   sftp:
     image: atmoz/sftp
     volumes:
-      - /home/bs678/Documents/personal/docker-data:/home/foo/upload
+      - /home/bs01246/Documents/docker-data:/home/foo/upload
     ports:
       - "9102:22"
     # command: foo:pass:1001
