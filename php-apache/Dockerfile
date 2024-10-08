@@ -14,22 +14,30 @@ ENV http_proxy="${HTTP_PROXY}" \
 
 USER root
 
-# Install & manage application dependencies
-RUN echo "-- Install/Upgrade APT Dependencies --" \
-        && apt-get update \
-        && apt-get upgrade -y \
-    && echo "-- Install PHP Extensions --" \
-        && install-php-extensions \
-            pcov \
-            redis \
-            gd \
-    && echo "--- Setting Up Apache ---" \
-        && a2enmod rewrite ssl headers \
-    && echo "--- Clean Up ---" \
-        && apt-get clean -y \
-        && apt-get autoremove -y \
-        && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-        && rm /var/log/lastlog /var/log/faillog
+# Install dependencies and tools
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y curl \
+    && echo "Dependencies installed."
+
+# Add and set up install-php-extensions
+RUN curl -sSLf https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions -o /usr/local/bin/install-php-extensions \
+    && chmod +x /usr/local/bin/install-php-extensions \
+    && echo "install-php-extensions set up."
+
+# Install PHP extensions
+RUN install-php-extensions pcov redis gd \
+    && echo "PHP extensions installed."
+
+# Configure Apache
+RUN a2enmod rewrite ssl headers \
+    && echo "Apache modules enabled."
+
+# Clean up to reduce image size
+RUN apt-get clean -y && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && rm /var/log/lastlog /var/log/faillog \
+    && echo "Clean-up complete."
+
 
 WORKDIR /var/www/html
 
@@ -59,8 +67,8 @@ COPY --chown=www-data:www-data ./composer.json ./composer.lock* /var/www/html/
 # Installing the packages here to cache them
 # So further installs from child images will
 # download less / no dependencies.
-RUN export composerInstallArgs="--no-interaction --no-scripts --no-autoloader --prefer-dist" \
-    && composer install $composerInstallArgs
+#RUN export composerInstallArgs="--no-interaction --no-scripts --no-autoloader --prefer-dist" \
+#    && composer install $composerInstallArgs
 
 COPY ./run-scheduler.sh /usr/local/bin/
 
