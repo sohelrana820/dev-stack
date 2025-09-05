@@ -1,35 +1,42 @@
-n8n:
-  image: n8nio/n8n:latest
-  container_name: smart_chef_n8n
-  restart: unless-stopped
-  environment:
-    # n8n Basic Configuration
-    - N8N_BASIC_AUTH_ACTIVE=${N8N_AUTH_ACTIVE}
-    - N8N_BASIC_AUTH_USER=${N8N_AUTH_USER}
-    - N8N_BASIC_AUTH_PASSWORD=${N8N_AUTH_PASSWORD}
-    # n8n Server Configuration
-    - N8N_HOST=${N8N_HOST}
-    - N8N_PORT=${N8N_INTERNAL_PORT}
-    - N8N_PROTOCOL=${N8N_PROTOCOL}
-    - WEBHOOK_URL=${WEBHOOK_URL}
-    - GENERIC_TIMEZONE=${TIMEZONE}
-    # n8n Security
-    - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=${N8N_ENFORCE_PERMISSIONS}
-    # Database Configuration
-    - DB_TYPE=${DATABASE_TYPE}
-    - DB_DATABASE_HOST=${DATABASE_HOST}
-    - DB_DATABASE_PORT=${DATABASE_PORT}
-    - DB_DATABASE_DATABASE=${DATABASE_NAME}
-    - DB_DATABASE_USER=${DATABASE_USER}
-    - DB_DATABASE_PASSWORD=${DATABASE_PASSWORD}
-  ports:
-    - "${N8N_EXTERNAL_PORT}:${N8N_INTERNAL_PORT}"
-  volumes:
-    - n8n_data:/home/node/.n8n
-    - ./n8n/workflows:/home/node/.n8n/workflows
-    - ./n8n/credentials:/home/node/.n8n/credentials
-  depends_on:
-    postgres:
-      condition: service_healthy
-  networks:
-    - server-common-network
+networks:
+  app_common_network:
+    external: true
+  pol-common-network:
+    external: true
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: smart_chef_n8n
+    restart: unless-stopped
+    environment:
+      # n8n Basic Configuration
+      - N8N_BASIC_AUTH_ACTIVE=${N8N_AUTH_ACTIVE}
+      - N8N_BASIC_AUTH_USER=${N8N_AUTH_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_AUTH_PASSWORD}
+      # n8n Server Configuration
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=${N8N_INTERNAL_PORT}
+      - N8N_PROTOCOL=${N8N_PROTOCOL}
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - GENERIC_TIMEZONE=${TIMEZONE}
+      # n8n Security
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=${N8N_ENFORCE_PERMISSIONS}
+      # Database Configuration
+      - DB_TYPE=${DATABASE_TYPE}
+      - DB_DATABASE_HOST=${DATABASE_HOST}
+      - DB_DATABASE_PORT=${DATABASE_PORT}
+      - DB_DATABASE_DATABASE=${DATABASE_NAME}
+      - DB_DATABASE_USER=${DATABASE_USER}
+      - DB_DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+      - "${N8N_EXTERNAL_PORT}:${N8N_INTERNAL_PORT}"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/home/node/.n8n/workflows
+      - ./n8n/credentials:/home/node/.n8n/credentials
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app_common_network
