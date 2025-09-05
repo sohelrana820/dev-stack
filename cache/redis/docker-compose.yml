@@ -1,9 +1,11 @@
 networks:
   common-net:
     external: true
-  pol-common-network:
+  app_common_network:
     external: true
   sol-order-orchester-app:
+    external: true
+  smart_chef_network:
     external: true
 
 volumes:
@@ -20,6 +22,8 @@ services:
       - "6378:6379"
     networks:
       - sol-order-orchester-app
+      - smart_chef_network
+      - app_common_network
     volumes:
       - common-redis:/bitnami
 
@@ -31,5 +35,6 @@ services:
       - 8081:8081
     networks:
       - common-net
-      - pol-common-network
+      - app_common_network
       - sol-order-orchester-app
+      - smart_chef_network

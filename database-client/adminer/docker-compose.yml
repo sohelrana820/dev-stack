@@ -9,6 +9,8 @@ networks:
     external: true
   sol-order-orchester-app:
     external: true
+  smart_chef_network:
+    external: true
 
 services:
   local_adminer:
@@ -23,5 +25,6 @@ services:
       - app_common_network
       - pol-common-network
       - sol-order-orchester-app
+      - smart_chef_network
     volumes:
       - ${VOLUME_PATH}:/sessions
