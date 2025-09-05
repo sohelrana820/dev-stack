@@ -7,7 +7,7 @@ networks:
 services:
   n8n:
     image: n8nio/n8n:latest
-    container_name: smart_chef_n8n
+    container_name: common_n8n
     restart: unless-stopped
     environment:
       # n8n Basic Configuration
@@ -35,8 +35,8 @@ services:
       - n8n_data:/home/node/.n8n
       - ./n8n/workflows:/home/node/.n8n/workflows
       - ./n8n/credentials:/home/node/.n8n/credentials
-    depends_on:
-      postgres:
-        condition: service_healthy
     networks:
       - app_common_network
+
+volumes:
+  n8n_data:
