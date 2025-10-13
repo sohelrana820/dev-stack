@@ -1,9 +1,5 @@
 networks:
-  common-net:
-    external: true
   app_common_network:
-    external: true
-  sol-order-orchester-app:
     external: true
   smart_chef_network:
     external: true
@@ -21,7 +17,6 @@ services:
     ports:
       - "6378:6379"
     networks:
-      - sol-order-orchester-app
       - smart_chef_network
       - app_common_network
     volumes:
@@ -32,9 +27,7 @@ services:
     env_file:
       - .env
     ports:
-      - 8081:8081
+      - "${REDIS_COMMANDER_PORT}:8081"
     networks:
-      - common-net
       - app_common_network
-      - sol-order-orchester-app
       - smart_chef_network
