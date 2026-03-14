@@ -1,0 +1,25 @@
+networks:
+  default:
+    driver: bridge
+  app_common_network:
+    external: true
+
+volumes:
+  common-postgres-data:
+    name: 'common-postgres-data'
+
+services:
+
+  postgres:
+    container_name: local-postgres
+    image: postgres:${POSTGRES_IMAGE_TAG}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - common-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_common_network
